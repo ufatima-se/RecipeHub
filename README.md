@@ -48,16 +48,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Home**
 <br>
-<img src="docs/images/screenshot-home.png" alt="Home page with search bar">
-<sub>`docs/images/screenshot-home.png`</sub>
+<img src="screenshots/home.png" alt="Home page with search bar">
 
 </td>
 <td width="50%">
 
 **Search Results**
 <br>
-<img src="docs/images/screenshot-search.png" alt="Search results as horizontal cards">
-<sub>`docs/images/screenshot-search.png`</sub>
+<img src="screenshots/search_results.png" alt="Search results as horizontal cards">
 
 </td>
 </tr>
@@ -66,16 +64,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Recipe Detail**
 <br>
-<img src="docs/images/screenshot-recipe.png" alt="Recipe detail page with rating and servings scaler">
-<sub>`docs/images/screenshot-recipe.png`</sub>
+<img src="screenshots/recipe_details.png" alt="Recipe detail page with rating and servings scaler">
 
 </td>
 <td width="50%">
 
 **My Recipes**
 <br>
-<img src="docs/images/screenshot-my-recipes.png" alt="My recipes management page">
-<sub>`docs/images/screenshot-my-recipes.png`</sub>
+<img src="screenshots/my_recipes.png" alt="My recipes management page">
 
 </td>
 </tr>
@@ -84,16 +80,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Add Recipe**
 <br>
-<img src="docs/images/screenshot-add.png" alt="Add recipe form with live image preview">
-<sub>`docs/images/screenshot-add.png`</sub>
+<img src="screenshots/add_recipe.png" alt="Add recipe form with live image preview">
 
 </td>
 <td width="50%">
 
 **Favorites**
 <br>
-<img src="docs/images/screenshot-favorites.png" alt="Favorited recipes grid">
-<sub>`docs/images/screenshot-favorites.png`</sub>
+<img src="screenshots/favourites.png" alt="Favorited recipes grid">
 
 </td>
 </tr>
@@ -102,16 +96,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **PDF Export**
 <br>
-<img src="docs/images/screenshot-pdf.png" alt="Downloaded recipe PDF">
-<sub>`docs/images/screenshot-pdf.png`</sub>
+<img src="screenshots/recipe_card_pdf_download.png" alt="Downloaded recipe PDF">
 
 </td>
 <td width="50%">
 
 **Login / Register**
 <br>
-<img src="docs/images/screenshot-login.png" alt="Login page">
-<sub>`docs/images/screenshot-login.png`</sub>
+<img src="screenshots/login.png" alt="Login page">
 
 </td>
 </tr>
