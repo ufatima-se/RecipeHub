@@ -1,0 +1,375 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ recipe["title"] }}
+{% endblock %}
+
+{% block main %}
+
+<div class="container mt-5">
+
+    <div class="row align-items-start">
+
+        <!-- Text Column -->
+        <div class="col-lg-7 px-4">
+
+            <!-- Title + Favorite & Share -->
+            <div class="d-flex align-items-center justify-content-between mb-2">
+
+                <h1 class="fw-bold m-0">{{ recipe["title"] }}</h1>
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <!-- Download -->
+                    <a href="/download/{{ recipe['id'] }}" class="btn btn-dark rounded-pill">
+                        <i class="fa-solid fa-download"></i> Download
+                    </a>
+
+                    <!-- Share -->
+                    <button
+                        type="button"
+                        id="share-btn"
+                        style="background:none;border:none;padding:0;cursor:pointer;"
+                        title="Share Recipe">
+                        <i class="fa-solid fa-share-nodes text-secondary fs-2"></i>
+                    </button>
+
+                    <!-- Favorite -->
+                    <form
+                        id="favorite-form"
+                        action="/favorite/{{ recipe['id'] }}"
+                        method="POST"
+                        class="m-0">
+                        <button
+                            type="submit"
+                            style="background:none;border:none;padding:0;cursor:pointer;">
+                            {% if is_favorite %}
+                                <i id="heart-icon" class="fa-solid fa-heart text-danger fs-2"></i>
+                            {% else %}
+                                <i id="heart-icon" class="fa-regular fa-heart text-secondary fs-2"></i>
+                            {% endif %}
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- Share Toast -->
+            <div
+                id="share-toast"
+                class="alert alert-success py-2 px-3 small d-none mb-3">
+                Link copied to clipboard! 📋
+            </div>
+
+            <!-- Average Rating -->
+            <div class="d-flex align-items-center gap-3 mb-2">
+                <h4 id="avg-rating" class="m-0 text-warning">
+                    ⭐ {{ "%.1f"|format(average["avg_rating"] or 0) }}
+                </h4>
+                <span id="rating-count" class="text-muted">
+                    ({{ average["total"] }} ratings)
+                </span>
+            </div>
+
+            <!-- Interactive Rating -->
+            <form
+                id="rating-form"
+                action="/rate/{{ recipe['id'] }}"
+                method="POST"
+                class="mb-4">
+                <input
+                    type="hidden"
+                    id="rating-input"
+                    name="rating"
+                    value="{{ my_rating[0]['rating'] if my_rating else 0 }}">
+
+                <div class="rating-stars">
+                    {% for i in range(1,6) %}
+                        <i
+                            class="fa-solid fa-star star {% if my_rating and my_rating[0]['rating'] >= i %}active{% endif %}"
+                            data-value="{{ i }}">
+                        </i>
+                    {% endfor %}
+                </div>
+            </form>
+
+            <p class="text-muted fs-5">
+                {{ recipe["description"] }}
+            </p>
+
+            <hr>
+
+            <h4 class="mt-4">Ingredients</h4>
+
+            <p class="lh-base" id="ingredients-text">
+                {{ recipe["ingredients"] }}
+            </p>
+
+            <hr>
+
+            <h4 class="mt-4">Instructions</h4>
+
+            <p class="lh-base">
+                {{ recipe["instructions"] }}
+            </p>
+
+            <hr>
+
+            <!-- Recipe Details -->
+            <div class="row mt-4 mb-4 text-secondary">
+
+                <div class="col-sm-6 mb-2">
+                    <strong>Prep Time:</strong>
+                    {{ recipe["prep_time"] }} mins
+                </div>
+
+                <div class="col-sm-6 mb-2">
+                    <strong>Cook Time:</strong>
+                    {{ recipe["cook_time"] }} mins
+                </div>
+
+                <div class="col-sm-6 mb-2 d-flex align-items-center gap-2">
+                    <strong>Servings:</strong>
+
+                    <button
+                        type="button"
+                        id="btn-minus"
+                        class="btn btn-sm btn-outline-secondary rounded-circle p-0 d-inline-flex align-items-center justify-content-center"
+                        style="width:22px;height:22px;">
+                        -
+                    </button>
+
+                    <span
+                        id="servings-count"
+                        data-base="{{ recipe['servings'] or 1 }}">
+                        {{ recipe["servings"] or 1 }}
+                    </span>
+
+                    <button
+                        type="button"
+                        id="btn-plus"
+                        class="btn btn-sm btn-outline-secondary rounded-circle p-0 d-inline-flex align-items-center justify-content-center"
+                        style="width:22px;height:22px;">
+                        +
+                    </button>
+                </div>
+
+                <div class="col-sm-6 mb-2">
+                    <strong>Difficulty:</strong>
+                    {{ recipe["difficulty"] }}
+                </div>
+
+                <div class="col-sm-6 mb-2">
+                    <strong>Category:</strong>
+                    {{ recipe["category"] }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Image -->
+        <div class="col-lg-5 text-center d-flex align-items-start justify-content-center">
+            {% if recipe["image"] %}
+                <div class="card recipe-image-card shadow-lg p-3">
+                    <img
+                        class="recipe-img img-fluid"
+                        src="{{ url_for('static', filename='uploads/' + recipe['image']) }}"
+                        alt="{{ recipe['title'] }}">
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+// ---------- Favorite (No Reload) ----------
+
+const favoriteForm = document.getElementById("favorite-form");
+const heart = document.getElementById("heart-icon");
+
+if (favoriteForm) {
+    favoriteForm.addEventListener("submit", async function(e){
+        e.preventDefault();
+
+        const response = await fetch(favoriteForm.action,{
+            method: "POST"
+        });
+
+        if(response.ok){
+            heart.classList.toggle("fa-solid");
+            heart.classList.toggle("fa-regular");
+            heart.classList.toggle("text-danger");
+            heart.classList.toggle("text-secondary");
+        }
+    });
+}
+
+
+// ---------- Rating (No Reload) ----------
+
+const stars = document.querySelectorAll(".star");
+const input = document.getElementById("rating-input");
+const form = document.getElementById("rating-form");
+
+if (input && form) {
+    let currentRating = Number(input.value);
+
+    paint(currentRating);
+
+    stars.forEach(star => {
+        star.addEventListener("mouseover", () => {
+            paint(Number(star.dataset.value));
+        });
+
+        star.addEventListener("mouseout", () => {
+            paint(currentRating);
+        });
+
+        star.addEventListener("click", async () => {
+            currentRating = Number(star.dataset.value);
+            input.value = currentRating;
+            paint(currentRating);
+
+            const data = new FormData(form);
+
+            const response = await fetch(form.action,{
+                method: "POST",
+                body: data
+            });
+
+            const result = await response.json();
+
+            document.getElementById("avg-rating").textContent = `⭐ ${result.average}`;
+            document.getElementById("rating-count").textContent = `(${result.total} ratings)`;
+        });
+    });
+
+    function paint(value){
+        stars.forEach(star => {
+            if(Number(star.dataset.value) <= value){
+                star.classList.add("active");
+            } else {
+                star.classList.remove("active");
+            }
+        });
+    }
+}
+
+
+const shareBtn = document.getElementById("share-btn");
+
+if (shareBtn) {
+    shareBtn.addEventListener("click", async () => {
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "{{ recipe['title'] }}",
+                    text: "Check out this recipe!",
+                    url: window.location.href
+                });
+            } catch (err) {
+                console.log("Share cancelled.");
+            }
+        } else {
+            // Fallback for browsers without Web Share API
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                alert("Link copied to clipboard!");
+            } catch (err) {
+                alert("Unable to share this recipe.");
+            }
+        }
+
+    });
+}
+
+
+// ---------- Servings & Multi-Unit Scaler ----------
+
+const btnMinus = document.getElementById("btn-minus");
+const btnPlus = document.getElementById("btn-plus");
+const servingsCount = document.getElementById("servings-count");
+const ingredientsText = document.getElementById("ingredients-text");
+
+if (btnMinus && btnPlus && servingsCount && ingredientsText) {
+
+    const baseServings = parseFloat(servingsCount.dataset.base) || 1;
+    const originalIngredients = ingredientsText.innerText;
+    let currentServings = baseServings;
+
+    // Formatter to handle fractions for cups/tbsp vs plain rounded numbers for grams/ml
+    function formatQuantity(num, isGramOrMl) {
+        if (isGramOrMl) {
+            // Grams/ml are best kept as rounded integers (e.g., 250g instead of 250.33g)
+            return Math.round(num).toString();
+        }
+
+        if (Number.isInteger(num)) return num.toString();
+
+        const whole = Math.floor(num);
+        const remainder = num - whole;
+
+        const fractionMap = [
+            { val: 0.25, str: "1/4" },
+            { val: 0.33, str: "1/3" },
+            { val: 0.5,  str: "1/2" },
+            { val: 0.66, str: "2/3" },
+            { val: 0.75, str: "3/4" }
+        ];
+
+        let match = fractionMap.find(f => Math.abs(remainder - f.val) < 0.08);
+
+        if (match) {
+            return whole > 0 ? `${whole} ${match.str}` : match.str;
+        }
+
+        return num.toFixed(1).replace(/\.0$/, "");
+    }
+
+    function updateIngredients(multiplier) {
+        // Regex looks for quantities followed by optional space and common units
+        const unitRegex = /(\b\d+\/\d+|\b\d+(?:\.\d+)?)\s*(?=(?:g|gram|grams|kg|ml|l|cup|cups|tbsp|tsp|oz|pound|lbs|clove|cloves|slice|slices)\b)/gi;
+
+        ingredientsText.innerText = originalIngredients.replace(unitRegex, (match, p1, offset, string) => {
+            let val;
+            if (p1.includes("/")) {
+                const parts = p1.split("/").map(Number);
+                val = parts[0] / parts[1];
+            } else {
+                val = parseFloat(p1);
+            }
+
+            const scaled = val * multiplier;
+
+            // Check if the matched unit is grams or ml to apply neat rounding
+            const tail = string.slice(offset + match.length, offset + match.length + 10).toLowerCase();
+            const isGramOrMl = /^\s*(?:g|gram|grams|kg|ml|l)\b/.test(tail);
+
+            return formatQuantity(scaled, isGramOrMl);
+        });
+    }
+
+    btnPlus.addEventListener("click", () => {
+        currentServings++;
+        servingsCount.textContent = currentServings;
+        updateIngredients(currentServings / baseServings);
+    });
+
+    btnMinus.addEventListener("click", () => {
+        if (currentServings > 1) {
+            currentServings--;
+            servingsCount.textContent = currentServings;
+            updateIngredients(currentServings / baseServings);
+        }
+    });
+}
+
+</script>
+
+{% endblock %}

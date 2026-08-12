@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}
+My Favorites
+{% endblock %}
+
+{% block main %}
+<div class="container py-5">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="fw-bold m-0 text-dark">My Favorite Recipes</h1>
+        <a href="/" class="btn btn-outline-dark rounded-pill px-4">Explore More</a>
+    </div>
+
+    {% if recipes %}
+        <!-- Card Grid -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+            {% for recipe in recipes %}
+                <div class="col d-flex align-items-stretch">
+
+                    <!-- Recipe Card -->
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden w-100 d-flex flex-column hover-shadow transition">
+
+                        <!-- Fixed Height Image Container -->
+                        <div style="height: 220px; overflow: hidden; background-color: #f8f9fa;">
+                            {% if recipe["image"] %}
+                                <img src="{{ url_for('static', filename='uploads/' + recipe['image']) }}"
+                                     alt="{{ recipe['title'] }}"
+                                     class="w-100 h-100"
+                                     style="object-fit: cover; object-position: center;">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted">
+                                    No Image
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Card Body (Flex column forces button to bottom) -->
+                        <div class="card-body p-4 d-flex flex-column text-center">
+
+                            <h5 class="fw-bold text-dark mb-2">{{ recipe["title"] }}</h5>
+
+                            <!-- Clamped description so heights stay aligned -->
+                            <p class="text-secondary small mb-4"
+                               style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem;">
+                                {{ recipe["description"] }}
+                            </p>
+
+                            <!-- Pinned Action Buttons Footer -->
+                            <div class="mt-auto pt-2 d-flex align-items-center justify-content-center gap-2">
+                                <a href="/recipe/{{ recipe['id'] }}" class="btn btn-dark rounded-pill px-4 btn-sm fw-semibold">
+                                    View Recipe
+                                </a>
+
+                                <!-- Unfavorite Button -->
+                                <form action="/favorite/{{ recipe['id'] }}" method="POST" class="m-0 p-0">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                                            style="width: 34px; height: 34px;"
+                                            title="Remove favorite">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm my-5 p-5">
+            <h3 class="fw-bold text-dark mb-2">No Saved Favorites Yet!</h3>
+            <p class="text-muted mb-4">Click the heart icon on any recipe page to add it to your collection.</p>
+            <a href="/" class="btn btn-dark rounded-pill px-4">Browse Recipes</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

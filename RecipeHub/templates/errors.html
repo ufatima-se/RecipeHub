@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block main %}
+
+<div class="error-container">
+    <h1>ERROR 400</h1>
+    <p>{{ message }}</p>
+
+    <a href={{back}} class="btn btn-dark">Try again</a>
+</div>
+
+{% endblock %}

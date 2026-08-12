@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block body_class %}
+home-page
+{% endblock %}
+
+{% block main %}
+    <div class="container hero">
+
+    <div class="hero-content">
+        <h1>Welcome to RecipeHub</h1>
+
+        <p>
+            Discover, cook, and share delicious recipes from around the world—all in one place.
+        </p>
+
+        <form action="/search" method="post">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search for a recipe..."
+                autocomplete = "off"
+                class="search-bar"
+            >
+        </form>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}
+

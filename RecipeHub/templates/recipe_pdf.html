@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ recipe["title"] }}</title>
+<style>
+@page {
+    size: A4;
+    margin: 12mm 15mm;
+    background-color: #FAF6F0; /* Warm parchment color */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #2D241E;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* Header Banner */
+.brand-header {
+    text-align: center;
+    border-bottom: 2px solid #8C6D58;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.brand-header span {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8C6D58;
+    font-weight: 600;
+}
+
+/* Main Recipe Header */
+.recipe-hero {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.recipe-title {
+    font-size: 26pt;
+    font-weight: normal;
+    color: #4A2E1A;
+    margin: 0 0 8px 0;
+    line-height: 1.1;
+    font-style: italic;
+}
+
+.recipe-subtitle {
+    font-size: 10.5pt;
+    color: #6E5A4C;
+    max-width: 85%;
+    margin: 0 auto 12px auto;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Metadata Bar Table */
+.meta-bar {
+    display: table;
+    width: 100%;
+    background-color: #EFE6DC;
+    border-radius: 8px;
+    padding: 10px 0;
+    margin: 15px 0 25px 0;
+    border: 1px solid #E2D4C5;
+}
+
+.meta-item {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #D6C4B2;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.meta-item:last-child {
+    border-right: none;
+}
+
+.meta-label {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8C6D58;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.meta-value {
+    font-size: 10pt;
+    font-weight: bold;
+    color: #3D2B1F;
+}
+
+/* Two Column Layout */
+.content-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.ingredients-col {
+    width: 38%;
+    vertical-align: top;
+    padding-right: 20px;
+    border-right: 1px dashed #C8B8A6;
+}
+
+.instructions-col {
+    width: 62%;
+    vertical-align: top;
+    padding-left: 20px;
+}
+
+.section-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12pt;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #4A2E1A;
+    border-bottom: 1.5px solid #4A2E1A;
+    padding-bottom: 4px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Ingredients Styling */
+.ingredient-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ingredient-list li {
+    font-size: 9.5pt;
+    padding: 6px 0;
+    border-bottom: 1px dotted #D6C4B2;
+    color: #3D2B1F;
+}
+
+.ingredient-list li:last-child {
+    border-bottom: none;
+}
+
+/* Numbered Instructions Styling */
+.instruction-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step-counter;
+}
+
+.instruction-list li {
+    counter-increment: step-counter;
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 14px;
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: #2D241E;
+}
+
+.instruction-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    background-color: #8C6D58;
+    color: #FFF;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8.5pt;
+    font-weight: bold;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt;
+    color: #9E8C7C;
+    border-top: 1px solid #E2D4C5;
+    padding-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="brand-header">
+    <span>• RecipeHub Cookbook Collection •</span>
+</div>
+
+<div class="recipe-hero">
+    <h1 class="recipe-title">{{ recipe["title"] }}</h1>
+    {% if recipe["description"] %}
+    <div class="recipe-subtitle">{{ recipe["description"] }}</div>
+    {% endif %}
+</div>
+
+<div class="meta-bar">
+    <div class="meta-item">
+        <span class="meta-label">Prep Time</span>
+        <span class="meta-value">{{ recipe["prep_time"] }} mins</span>
+    </div>
+    <div class="meta-item">
+        <span class="meta-label">Cook Time</span>
+        <span class="meta-value">{{ recipe["cook_time"] }} mins</span>
+    </div>
+    <div class="meta-item">
+        <span class="meta-label">Servings</span>
+        <span class="meta-value">{{ recipe["servings"] }}</span>
+    </div>
+    <div class="meta-item">
+        <span class="meta-label">Difficulty</span>
+        <span class="meta-value">{{ recipe["difficulty"] }}</span>
+    </div>
+    <div class="meta-item">
+        <span class="meta-label">Rating</span>
+        <span class="meta-value">★ {{ "%.1f"|format(average["avg_rating"] or 0) }}</span>
+    </div>
+</div>
+
+<table class="content-table">
+    <tr>
+        <td class="ingredients-col">
+            <h2 class="section-title">Ingredients</h2>
+            <ul class="ingredient-list">
+                {% for ingredient in recipe["ingredients"].split("\n") %}
+                    {% if ingredient.strip() %}
+                    <li>{{ ingredient.strip() }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </td>
+        <td class="instructions-col">
+            <h2 class="section-title">Preparation</h2>
+            <ol class="instruction-list">
+                {% for step in recipe["instructions"].split("\n") %}
+                    {% if step.strip() %}
+                    <li>{{ step.strip() }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </td>
+    </tr>
+</table>
+
+<div class="footer">
+    Downloaded from RecipeHub
+</div>
+
+</body>
+</html>

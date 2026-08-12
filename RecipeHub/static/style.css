@@ -1,0 +1,267 @@
+
+/* Apply background color to the entire page */
+body {
+    background-color: #FAF2E8 !important;
+}
+
+/* If you want cards to also match the page background */
+
+.home-page {
+    background-image: url("/static/background.jpg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: contain;
+    background-color: #f8f1e4;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: #111111 !important;
+    padding: 15px 0;
+}
+.navbar-brand {
+    color: #f8e7c2 !important;
+    font-weight: 700;
+}
+.hero {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 85vh;
+}
+
+.hero-content {
+    width: 45%;
+    margin-right: 5%;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 20px 0 35px;
+    line-height: 1.6;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.no-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+}
+.add-container{
+    max-width:850px;
+    margin:60px auto;
+    background:white;
+    padding:45px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.add-container h1{
+    text-align:center;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.add-container p{
+    text-align:center;
+    color:#666;
+    margin-bottom:35px;
+}
+
+.form-control,
+.form-select{
+    border-radius:15px;
+    padding:12px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.btn-add{
+    width:100%;
+    border-radius:50px;
+    padding:14px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.btn-add:hover{
+    transform:translateY(-2px);
+    transition:.3s;
+}
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+}
+
+.error-container h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.error-container p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 25px;
+}
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+.register form{
+    display:flex;
+    flex-direction:column;
+    width:350px;
+    gap:15px;
+}
+
+.register input{
+    padding:12px;
+    border-radius:12px;
+    border:1px solid #ccc;
+}
+
+.register button{
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:black;
+    color:white;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.register button:hover{
+    background:#333;
+}
+
+/* Recipe Card */
+.card{
+    max-width: 1100px;
+    margin: 30px auto;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+}
+
+.card-body{
+    padding: 30px;
+}
+
+/* Image */
+.recipe-img{
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+.recipe-img:hover{
+    transform: scale(1.03);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.35);
+}
+
+/* Space between image and text on smaller screens */
+@media (max-width: 992px){
+    .recipe-img{
+        margin-top: 20px;
+    }
+}
+.search-page{
+    background-color: #F8F4EC;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+/* Styling applied ONLY to the image container */
+.recipe-image-card {
+    border: none;
+    border-radius: 20px;
+    background-color: #fff;
+    /* Keeps the shadow and transition effects specific to the image */
+    box-shadow: 0 10px 25px rgba(0,0,0,.1);
+    transition: transform .3s ease, box-shadow .3s ease;
+    display: inline-block; /* Helps center the card within the column */
+}
+
+/* Hover effect on the image card */
+.recipe-image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.2);
+}
+
+/* Base image styling */
+.recipe-img {
+    /* Adjusted sizing for better fit within the new column layout */
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 15px; /* Slightly smaller radius to fit inside card padding */
+}
+
+/* Typography tweaks for non-card text */
+.lh-base {
+    line-height: 1.6;
+}
+
+
+.rating-stars{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.star{
+    font-size:34px;
+    color:#d8d8d8;
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.star:hover{
+    transform:scale(1.2);
+}
+
+.star.active{
+    color:#f7b500;
+}

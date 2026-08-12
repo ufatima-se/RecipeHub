@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Recipe
+{% endblock %}
+
+{% block main %}
+
+<div class="add-container">
+
+    <h1>Add a New Recipe 🍳</h1>
+    <p>Share your favorite dish with food lovers around the world.</p>
+
+   <form action="/add" method="POST" enctype="multipart/form-data">
+
+        <div class="mb-3">
+            <label class="form-label">Recipe Title</label>
+            <input class="form-control" name="title" placeholder="e.g. Chocolate Brownies" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="3" name="description" placeholder="A short description..."></textarea>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-select" name="category">
+                    <option>Dessert</option>
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                    <option>Snack</option>
+                    <option>Drink</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Difficulty</label>
+                <select class="form-select" name="difficulty">
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Prep Time (mins)</label>
+                <input class="form-control" type="number" name="prep_time">
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Cook Time (mins)</label>
+                <input class="form-control" type="number" name="cook_time">
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Servings</label>
+                <input class="form-control" type="number" name="servings">
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ingredients</label>
+            <textarea class="form-control" rows="6" name="ingredients" placeholder="List each ingredient..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Instructions</label>
+            <textarea class="form-control" rows="8" name="instructions" placeholder="Write the cooking steps..."></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Recipe Image</label>
+            <input id = "image" class="form-control" type="file" name="image" accept="image/*">
+        </div>
+
+        <img id="preview" src="" alt="Image Preview" style="display:none; width:300px; margin-top:15px; border-radius:15px;">
+
+        <button class="btn btn-dark btn-add" type="submit">
+            Add Recipe
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+const input = document.getElementById("image");
+const preview = document.getElementById("preview");
+
+input.onchange = function () {
+
+    preview.src = URL.createObjectURL(input.files[0]);
+
+    preview.style.display = "block";
+
+};
+
+</script>
+
+{% endblock %}

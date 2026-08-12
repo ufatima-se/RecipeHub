@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block main %}
+<style>
+    .horizontal-recipe-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .horizontal-recipe-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+    }
+    .card-img-side {
+        width: 100%;
+        height: 100%;
+        min-height: 220px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container py-5">
+
+   <div class="d-flex justify-content-between align-items-center mb-5">
+
+    <h2 class="fw-bold m-0 text-dark">Search Results</h2>
+
+    <form action="/search" method="GET" class="d-flex" style="max-width: 500px; width:100%;">
+        <div class="input-group shadow-sm">
+            <input
+                type="text"
+                autocomplete = "off"
+                class="form-control border-0"
+                name="q"
+                placeholder="Search recipes..."
+                value="{{ request.args.get('q', '') }}"
+            >
+
+            <button class="btn btn-dark px-4" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<p class="text-muted small fw-medium mb-4">
+    {{ recipes|length }} recipe{% if recipes|length != 1 %}s{% endif %} found
+</p>
+
+    {% if recipes %}
+        <div class="d-flex flex-column gap-4">
+            {% for recipe in recipes %}
+
+                <!-- Horizontal Card -->
+                <div class="card horizontal-recipe-card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <div class="row g-0 align-items-center">
+
+                        <!-- Left Image Column -->
+                        <div class="col-md-4 col-lg-3">
+                            <div class="position-relative h-100 bg-light" style="min-height: 220px;">
+                                {% if recipe["category"] %}
+                                    <span class="position-absolute top-0 start-0 m-3 px-3 py-1 rounded-pill small bg-white text-dark fw-semibold shadow-sm">
+                                        {{ recipe["category"] }}
+                                    </span>
+                                {% endif %}
+
+                                {% if recipe["image"] %}
+                                    <img src="{{ url_for('static', filename='uploads/' + recipe['image']) }}"
+                                         alt="{{ recipe['title'] }}"
+                                         class="card-img-side">
+                                {% else %}
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted fw-medium" style="min-height: 220px;">
+                                        No Image
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Right Text Column -->
+                        <div class="col-md-8 col-lg-9">
+                            <div class="card-body p-4 d-flex flex-column h-100">
+
+                                <!-- Title + Heart Toggle -->
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h4 class="fw-bold text-dark m-0">{{ recipe["title"] }}</h4>
+
+                                    <form action="/favorite/{{ recipe['id'] }}" method="POST" class="m-0 p-0">
+                                        <input type="hidden" name="q" value="{{ request.args.get('q') or request.form.get('q') or '' }}">
+                                        <button type="submit" class="btn border-0 p-0 shadow-none">
+                                            {% if recipe["is_favorite"] %}
+                                                <i class="fa-solid fa-heart text-danger fs-4"></i>
+                                            {% else %}
+                                                <i class="fa-regular fa-heart text-secondary fs-4"></i>
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Short Description -->
+                                <p class="text-secondary small mb-3 text-truncate-2" style="max-width: 700px;">
+                                    {{ recipe["description"] or "A delicious homemade recipe." }}
+                                </p>
+
+                                <!-- Stats Bar -->
+                                <div class="d-flex align-items-center gap-4 text-muted small mb-3">
+                                    {% if recipe["prep_time"] %}
+                                        <div><strong>Prep:</strong> {{ recipe["prep_time"] }} mins </div>
+                                    {% endif %}
+                                    {% if recipe["cook_time"] %}
+                                        <div><strong>Cook:</strong> {{ recipe["cook_time"] }} mins </div>
+                                    {% endif %}
+                                    {% if recipe["difficulty"] %}
+                                        <div><strong>Difficulty:</strong> {{ recipe["difficulty"] }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- View Recipe Button -->
+                                <div class="mt-auto pt-2">
+                                    <a href="/recipe/{{ recipe['id'] }}" class="btn btn-dark rounded-pill px-4 btn-sm fw-semibold">
+                                        View Recipe
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm my-5 p-5">
+            <h4 class="fw-bold text-dark mb-2">No matching recipes found</h4>
+            <p class="text-muted mb-4">Try searching for another recipe.</p>
+            <a href="/" class="btn btn-dark rounded-pill px-4">Back to Home</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

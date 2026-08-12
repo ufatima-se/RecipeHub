@@ -1,0 +1,18 @@
+// The web framework
+Flask==3.1.3
+
+// Server side login sessions
+Flask-Session==0.8.0
+
+// The sql library
+cs50==9.4.0
+
+// Password hashing
+Werkzeug==3.1.8
+
+// For pdf generation
+reportlab==5.0.0
+
+// For converting html to pdf version
+weasyprint==68.1
+
