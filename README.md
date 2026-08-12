@@ -103,7 +103,7 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Login / Register**
 <br>
-<img src="Screenshots/login.png" alt="Login page">
+<img src="Screenshots/login_register.png" alt="Login page">
 
 </td>
 </tr>
