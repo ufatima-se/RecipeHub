@@ -48,14 +48,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Home**
 <br>
-<img src="screenshots/home.png" alt="Home page with search bar">
+<img src="Screenshots/home.png" alt="Home page with search bar">
 
 </td>
 <td width="50%">
 
 **Search Results**
 <br>
-<img src="screenshots/search_results.png" alt="Search results as horizontal cards">
+<img src="Screenshots/search_results.png" alt="Search results as horizontal cards">
 
 </td>
 </tr>
@@ -64,14 +64,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Recipe Detail**
 <br>
-<img src="screenshots/recipe_details.png" alt="Recipe detail page with rating and servings scaler">
+<img src="Screenshots/recipe_details.png" alt="Recipe detail page with rating and servings scaler">
 
 </td>
 <td width="50%">
 
 **My Recipes**
 <br>
-<img src="screenshots/my_recipes.png" alt="My recipes management page">
+<img src="Screenshots/my_recipes.png" alt="My recipes management page">
 
 </td>
 </tr>
@@ -80,14 +80,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **Add Recipe**
 <br>
-<img src="screenshots/add_recipe.png" alt="Add recipe form with live image preview">
+<img src="Screenshots/add_recipe.png" alt="Add recipe form with live image preview">
 
 </td>
 <td width="50%">
 
 **Favorites**
 <br>
-<img src="screenshots/favourites.png" alt="Favorited recipes grid">
+<img src="Screenshots/favourites.png" alt="Favorited recipes grid">
 
 </td>
 </tr>
@@ -96,14 +96,14 @@ Drop your own screenshots into `docs/images/` using the filenames below — they
 
 **PDF Export**
 <br>
-<img src="screenshots/recipe_card_pdf_download.png" alt="Downloaded recipe PDF">
+<img src="Screenshots/recipe_card_pdf_download.png" alt="Downloaded recipe PDF">
 
 </td>
 <td width="50%">
 
 **Login / Register**
 <br>
-<img src="screenshots/login.png" alt="Login page">
+<img src="Screenshots/login.png" alt="Login page">
 
 </td>
 </tr>
