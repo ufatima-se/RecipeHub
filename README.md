@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="docs/images/banner.svg" alt="RecipeHub banner" width="100%">
-
 # RecipeHub
 
 Create, search, save, and share recipes.
